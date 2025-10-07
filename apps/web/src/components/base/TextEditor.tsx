@@ -12,9 +12,10 @@ interface TextEditorProps {
 
 export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProps) {
     const [inputValue, setInputValue] = useState<string>('');
+    const isDisabled = inputValue.trim() === '';
 
     function handleSubmit() {
-        if (inputValue.trim()) {
+        if (!isDisabled) {
             setIsExpanded(true)
         }
     }
@@ -30,37 +31,21 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
         <motion.div
             layout
             initial={false}
-            animate={
-                isExpanded ? {
-                    position: 'absolute',
-                    bottom: '24px',
-                    left: '24px',
-                    top: 'auto',
-                    right: 'auto',
-                    width: '32rem',
-                    height: '15rem',
-                    maxWidth: 'calc(100% - 48px)',
-                    x: 0,
-                    y: 0,
-                } : {
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    bottom: 'auto',
-                    right: 'auto',
-                    x: '-50%',
-                    y: '-50%',
-                    width: '56rem',
-                    height: '12rem',
-                    maxWidth: 'calc(100% - 48px)',
-                }
-            }
+            animate={{
+                position: 'absolute',
+                bottom: '2rem',
+                left: '50%',
+                x: '-50%',
+                width: '56rem',
+                height: '12rem',
+                maxWidth: 'calc(100% - 48px)',
+            }}
             transition={{
                 type: "spring",
                 stiffness: 300,
                 damping: 30
             }}
-            className="flex items-center justify-center mt-[16rem]">
+            className="flex items-center justify-center absolute">
             <div className="relative z-10 h-full w-full flex items-center justify-center">
                 <Textarea
                     value={inputValue}
@@ -77,8 +62,18 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
                 />
                 <Button
                     onClick={handleSubmit}
-                    className="absolute bottom-4 right-4 bg-primary rounded-full w-8 h-8 flex items-center justify-center p-0">
-                    <FaChevronUp className="w-3 h-3" />
+                    disabled={isDisabled}
+                    className={cn(
+                        "absolute bottom-4 right-4 rounded-full w-8 h-8 flex items-center justify-center p-0",
+                        "transition-all duration-200",
+                        isDisabled 
+                            ? "bg-neutral-700 cursor-not-allowed opacity-50 hover:bg-neutral-700" 
+                            : "bg-primary hover:bg-primary/90 hover:scale-105"
+                    )}>
+                    <FaChevronUp className={cn(
+                        "w-3 h-3 transition-colors duration-200",
+                        isDisabled ? "text-neutral-500" : "text-white"
+                    )} />
                 </Button>
             </div>
         </motion.div>
