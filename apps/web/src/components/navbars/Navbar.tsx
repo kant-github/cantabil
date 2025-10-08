@@ -19,7 +19,7 @@ const navItems = [
 
 export default function Navbar() {
     return (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4 py-4 rounded-2xl shadow-lg z-[100] bg-neutral-800/50">
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4 py-3 rounded-2xl shadow-lg z-[100] bg-[#141517]">
             <div className="px-4 flex items-center justify-between w-full">
                 <GiNinjaHead className='text-light h-7 w-7' />
                 <NavItems items={navItems}></NavItems>

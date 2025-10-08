@@ -12,10 +12,9 @@ interface TextEditorProps {
 
 export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProps) {
     const [inputValue, setInputValue] = useState<string>('');
-    const isDisabled = inputValue.trim() === '';
 
     function handleSubmit() {
-        if (!isDisabled) {
+        if (inputValue.trim()) {
             setIsExpanded(true)
         }
     }
@@ -32,10 +31,6 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
             layout
             initial={false}
             animate={{
-                position: 'absolute',
-                bottom: '2rem',
-                left: '50%',
-                x: '-50%',
                 width: '56rem',
                 height: '12rem',
                 maxWidth: 'calc(100% - 48px)',
@@ -45,7 +40,7 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
                 stiffness: 300,
                 damping: 30
             }}
-            className="flex items-center justify-center absolute">
+            className="flex items-center justify-center">
             <div className="relative z-10 h-full w-full flex items-center justify-center">
                 <Textarea
                     value={inputValue}
@@ -53,7 +48,7 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
                     onKeyDown={handleKeyDown}
                     placeholder="Create a todo application.."
                     className={cn(
-                        "h-full w-full border-2 border-neutral-700 py-5 px-7 rounded-4xl shadow-xl",
+                        "h-full w-full border-2 border-neutral-600 py-5 px-7 rounded-4xl shadow-xl",
                         "bg-neutral-900",
                         "focus-visible:border-neutral-700 focus-visible:ring-0",
                         "outline-none transition-all duration-200",
@@ -62,20 +57,11 @@ export default function TextEditor({ isExpanded, setIsExpanded }: TextEditorProp
                 />
                 <Button
                     onClick={handleSubmit}
-                    disabled={isDisabled}
-                    className={cn(
-                        "absolute bottom-4 right-4 rounded-full w-8 h-8 flex items-center justify-center p-0",
-                        "transition-all duration-200",
-                        isDisabled 
-                            ? "bg-neutral-700 cursor-not-allowed opacity-50 hover:bg-neutral-700" 
-                            : "bg-primary hover:bg-primary/90 hover:scale-105"
-                    )}>
-                    <FaChevronUp className={cn(
-                        "w-3 h-3 transition-colors duration-200",
-                        isDisabled ? "text-neutral-500" : "text-white"
-                    )} />
+                    className={cn("absolute bottom-4 right-4 rounded-full w-8 h-8 flex items-center justify-center p-0",
+                        inputValue === "" ? "bg-primary/50</div>" : "bg-primary")}>
+                    <FaChevronUp className="w-3 h-3" />
                 </Button>
-            </div>
-        </motion.div>
+            </div >
+        </motion.div >
     )
 }
